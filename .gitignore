@@ -5,4 +5,4 @@
 *.txt
 
 # Ignora los archivos relacionados a API keys
-.env
+.envmonopoly.xlsx
