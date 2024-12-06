@@ -18,6 +18,8 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    background: url('https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvNjcxY2IwODhjYzU2Mi5qcGciLCJyZXNpemUsMTUwMHxmb3JtYXQsd2VicCJdfQ.m5b2D6L6cVX8sHFwvUYDjprzg8Iez8z0V3AqPdfvPVY.webp') no-repeat center center fixed;
+    background-size: cover;
 }
 
 .container {

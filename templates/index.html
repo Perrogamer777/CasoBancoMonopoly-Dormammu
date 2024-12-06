@@ -12,17 +12,20 @@
         
         <div class="form-group">
             <label for="edad">Edad:</label>
-            <input type="number" id="edad" required>
+            <input type="number" id="edad" placeholder="Ingrese su edad" required>
         </div>
         
         <div class="form-group">
             <label for="renta">Renta:</label>
-            <input type="number" id="renta" required>
+            <input type="text" id="renta" placeholder="Ingrese su renta mensual" required 
+                   oninput="formatearRenta(this)" 
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+            <span class="helper-text">Ejemplo: 1.000.000</span>
         </div>
         
         <div class="form-group">
             <label for="region">Región:</label>
-            <select id="region" required class="form-control">
+            <select id="region" required class="form-control" placeholder="Seleccione su región">
                 <option value="">Seleccione una región</option>
                 {% for region, numero in regiones.items() %}
                 <option value="{{ region }}">{{ region }}</option>
@@ -32,7 +35,7 @@
         
         <div class="form-group">
             <label for="antiguedad">Antigüedad (meses):</label>
-            <input type="number" id="antiguedad" required>
+            <input type="number" id="antiguedad" placeholder="Ingrese su antigüedad en meses" required>
         </div>
         
         <button onclick="predecir()">Predecir</button>
@@ -41,17 +44,37 @@
     </div>
 
     <script>
+        function formatearRenta(input) {
+            // Eliminar todo excepto números
+            let valor = input.value.replace(/\D/g, '');
+            
+            // Convertir a número y formatear con puntos
+            if (valor !== '') {
+                valor = parseInt(valor).toLocaleString('es-CL');
+            }
+            
+            // Actualizar el valor del input
+            input.value = valor;
+        }
+
         function predecir() {
+            const rentaValue = document.getElementById('renta').value.replace(/\./g, '');
+            
             const data = {
                 edad: document.getElementById('edad').value,
-                renta: document.getElementById('renta').value,
+                renta: rentaValue, // Usar el valor sin puntos
                 region: document.getElementById('region').value,
                 antiguedad: document.getElementById('antiguedad').value
             };
 
-            // Validar que se haya seleccionado una región
+            // Validaciones
             if (!data.region) {
                 alert('Por favor seleccione una región');
+                return;
+            }
+
+            if (!data.renta || data.renta === '0') {
+                alert('Por favor ingrese una renta válida');
                 return;
             }
 
