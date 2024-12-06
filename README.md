@@ -4,6 +4,7 @@
 
 git clone https://github.com/Perrogamer777/CasoBancoMonopoly-Dormammu.git
 
+## Crear entorno virtual
 ## Windows
 python -m venv .venv
 .venv\Scripts\activate
