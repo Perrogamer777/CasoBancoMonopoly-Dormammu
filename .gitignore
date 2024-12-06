@@ -4,13 +4,8 @@
 # Ignora todos los archivos de texto
 *.txt
 
-<<<<<<< HEAD
 # Ignora entorno virtual
 .venv
 
 # Ignora el archivo de datos
 monopoly.xlsx
-=======
-# Ignora los archivos relacionados a API keys
-.envmonopoly.xlsx
->>>>>>> d502b2b9143423f4e67b9808596c2658369305c1
