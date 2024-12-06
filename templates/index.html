@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predictor de Internautas - Banco Monopoly</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+        .alta {
+            color: #4CAF50;
+        }
+        .media {
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predictor de Internautas - Banco Monopoly</h1>
+        
+        <div class="form-group">
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="renta">Renta:</label>
+            <input type="number" id="renta" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="region">Región (1-13):</label>
+            <input type="number" id="region" min="1" max="13" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="antiguedad">Antigüedad (meses):</label>
+            <input type="number" id="antiguedad" required>
+        </div>
+        
+        <button onclick="predecir()">Predecir</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function predecir() {
+            const data = {
+                edad: document.getElementById('edad').value,
+                renta: document.getElementById('renta').value,
+                region: document.getElementById('region').value,
+                antiguedad: document.getElementById('antiguedad').value
+            };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultado = document.getElementById('resultado');
+                resultado.style.display = 'block';
+                resultado.innerHTML = `
+                    <h3>Resultado:</h3>
+                    <p><strong>${data.mensaje}</strong></p>
+                    <p>Probabilidad: ${(data.probabilidad * 100).toFixed(2)}%</p>
+                    <p>Confianza: <span class="${data.confianza.toLowerCase()}">${data.confianza}</span></p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('resultado').innerHTML = `
+                    <p style="color: red;">Error: ${error}</p>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
